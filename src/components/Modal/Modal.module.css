@@ -15,3 +15,22 @@
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 24px);
 }
+.Modal img {
+  display: block;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.button {
+  position: absolute;
+  right: 53px;
+  top: 38px;
+  z-index: 999;
+  background: transparent;
+  border: none;
+}
+.button svg {
+  fill: white;
+  font-size: 40px;
+  cursor: pointer;
+}

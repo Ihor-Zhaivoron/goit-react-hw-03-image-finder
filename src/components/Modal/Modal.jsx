@@ -30,7 +30,7 @@ export class Modal extends Component {
     const { onCloseModal, activeImg } = this.props;
     return createPortal(
       <div className={css.Overlay} onclick={this.handleBackdropClick}>
-        <button type="button" className={css.button} onClick={onCloseModal}>
+        <button type="button" className={css.Button} onClick={onCloseModal}>
           <CgCloseR />
         </button>
         <div className={css.Modal}>

@@ -13,7 +13,7 @@ export class App extends Component {
     images: [],
     activeImg: null,
     status: 'blank',
-    searchText: '',
+    searchText: 'cat',
     page: 1,
     totalPages: 1,
   };
@@ -46,7 +46,6 @@ export class App extends Component {
   };
 
   onSubmit = searchText => {
-    console.log(searchText);
     this.setState({ searchText: searchText, page: 1, images: [] });
   };
 

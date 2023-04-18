@@ -5,7 +5,7 @@ export function Button({ onClickNextPage }) {
   return (
     <Button
       type="button"
-      className={css.button}
+      className={css.Button}
       onClick={onClickNextPage}
     ></Button>
   );
