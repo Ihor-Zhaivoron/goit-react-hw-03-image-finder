@@ -1,14 +1,14 @@
-import { Dna } from 'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 import css from './Loader.module.css';
 
 export function Loader() {
   <div className={css.Loader}>
-    <Dna
+    <ThreeDots
       visible={true}
       height="80"
       width="80"
       radius="9"
-      color="orange"
+      color="#f50505"
       ariaLabel="dna-loading"
     />
   </div>;
