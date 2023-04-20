@@ -21,7 +21,8 @@
   max-height: 90vh;
 }
 
-.button {
+.Button {
+  color: white;
   position: absolute;
   right: 53px;
   top: 38px;
@@ -29,7 +30,7 @@
   background: transparent;
   border: none;
 }
-.button svg {
+.Button svg {
   fill: white;
   font-size: 40px;
   cursor: pointer;

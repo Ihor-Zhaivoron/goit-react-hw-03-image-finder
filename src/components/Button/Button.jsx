@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 
 export function Button({ onClickNextPage }) {
   return (
-    <Button
-      type="button"
-      className={css.Button}
-      onClick={onClickNextPage}
-    ></Button>
+    <button type="button" className={css.Button} onClick={onClickNextPage}>
+      Load more
+    </button>
   );
 }
 

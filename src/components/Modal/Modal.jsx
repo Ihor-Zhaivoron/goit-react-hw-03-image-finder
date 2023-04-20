@@ -7,14 +7,14 @@ const modalRoot = document.querySelector('#modal_root');
 
 export class Modal extends Component {
   componentDidMount() {
-    document.addEventListener('keydown', this.handleCloseModal());
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleCloseModal());
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleCloseModal = e => {
+  handleKeyDown = e => {
     if (e.code === 'Escape') {
       this.props.onCloseModal();
     }
@@ -29,7 +29,7 @@ export class Modal extends Component {
   render() {
     const { onCloseModal, activeImg } = this.props;
     return createPortal(
-      <div className={css.Overlay} onclick={this.handleBackdropClick}>
+      <div className={css.Overlay} onClick={this.handleBackdropClick}>
         <button type="button" className={css.Button} onClick={onCloseModal}>
           <CgCloseR />
         </button>

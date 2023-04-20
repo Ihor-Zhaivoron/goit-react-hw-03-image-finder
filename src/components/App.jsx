@@ -5,8 +5,10 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import ScrollToTop from 'react-scroll-to-top';
+import css from './App.module.css';
 
-const API = 'https://pixabay.com/api/?key=30885562-a2eefab65b39820f24403263b';
+const API_KEY = '30885562-a2eefab65b39820f24403263b';
+// 'https://pixabay.com/api/?key=30885562-a2eefab65b39820f24403263b&image_type=photo&orientation=horizontal&per_page=12';
 
 export class App extends Component {
   state = {
@@ -15,42 +17,71 @@ export class App extends Component {
     status: 'blank',
     searchText: 'cat',
     page: 1,
-    totalPages: 1,
+    totalPage: 1,
+    total: 0,
   };
 
   onCloseModal = () => {
     this.setState({ activeImg: null });
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.searchText !== this.state.searchText ||
-      prevState.page !== this.state.page
-    ) {
-      this.getApiQuery();
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     prevState.searchText !== this.state.searchText ||
+  //     prevState.page !== this.state.page
+  //   ) {
+  //     this.getApiQuery();
+  //   }
+  // }
 
-  getApiQuery = () => {
-    this.setState({ status: 'pending' });
-    fetch(`${API}&q=${this.state.searchText}&page=${this.state.page}`)
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-          status: 'resolve',
-          totalPages: Math.ceil(data.totalHits / 20),
-        }));
-      });
+  // getApiQuery = () => {
+  //   this.setState({ status: 'pending' });
+  //   fetch(`${API}&q=${this.state.searchText}&page=${this.state.page}`)
+  //     .then(resp => resp.json())
+  //     .then(data => {
+  //       console.log(data);
+  //       this.setState(prevState => ({
+  //         images: [...prevState.images, ...data.hits],
+  //         status: 'resolve',
+  //         totalPage: Math.ceil(data.totalHits / 20),
+  //       }));
+  //     });
+  // };
+  getApiQuery = (searchText, page) => {
+    return fetch(
+      `https://pixabay.com/api/?q=${searchText}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
+    ).then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(new Error(`Can't find ${searchText}`));
+    });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const { searchText, page } = this.state;
+    if (prevState.searchText !== searchText || prevState.page !== page) {
+      this.getApiQuery(searchText, page)
+        .then(data => {
+          this.setState(prevState => ({
+            images: [...prevState.images, ...data.hits],
+            status: 'resolve',
+            totalPage: Math.ceil(data.totalHits / 20),
+          }));
+        })
+        .catch(error => {
+          console.log(error);
+          this.setState({ error });
+        });
+    }
+  }
   onSubmit = searchText => {
     this.setState({ searchText: searchText, page: 1, images: [] });
   };
 
   onImgClick = image => {
     this.setState({ activeImg: image });
+    console.log(image);
   };
 
   onClickNextPage = () => {
@@ -58,10 +89,10 @@ export class App extends Component {
   };
 
   render() {
-    const { images, activeImg, status, searchText, page, totalPages } =
+    const { images, activeImg, status, searchText, page, totalPage } =
       this.state;
     return (
-      <div className="App">
+      <div className={css.App}>
         <Searchbar onSubmit={this.onSubmit} />
 
         {images.length > 0 && (
@@ -73,7 +104,7 @@ export class App extends Component {
 
         {status === 'pending' && <Loader />}
 
-        {status === 'resolve' && images.length > 0 && page !== totalPages && (
+        {status === 'resolve' && images.length > 0 && page !== totalPage && (
           <Button onClickNextPage={this.onClickNextPage} />
         )}
 
