@@ -9,7 +9,7 @@ export function Loader() {
       width="80"
       radius="9"
       color="#f50505"
-      ariaLabel="dna-loading"
+      ariaLabel="ThreeDots-loading"
     />
   </div>;
 }

@@ -15,7 +15,7 @@ export class App extends Component {
     images: [],
     activeImg: null,
     status: 'blank',
-    searchText: 'cat',
+    searchText: '',
     page: 1,
     totalPage: 1,
     total: 0,
@@ -25,28 +25,6 @@ export class App extends Component {
     this.setState({ activeImg: null });
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     prevState.searchText !== this.state.searchText ||
-  //     prevState.page !== this.state.page
-  //   ) {
-  //     this.getApiQuery();
-  //   }
-  // }
-
-  // getApiQuery = () => {
-  //   this.setState({ status: 'pending' });
-  //   fetch(`${API}&q=${this.state.searchText}&page=${this.state.page}`)
-  //     .then(resp => resp.json())
-  //     .then(data => {
-  //       console.log(data);
-  //       this.setState(prevState => ({
-  //         images: [...prevState.images, ...data.hits],
-  //         status: 'resolve',
-  //         totalPage: Math.ceil(data.totalHits / 20),
-  //       }));
-  //     });
-  // };
   getApiQuery = (searchText, page) => {
     return fetch(
       `https://pixabay.com/api/?q=${searchText}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
@@ -66,7 +44,7 @@ export class App extends Component {
           this.setState(prevState => ({
             images: [...prevState.images, ...data.hits],
             status: 'resolve',
-            totalPage: Math.ceil(data.totalHits / 20),
+            totalPage: Math.ceil(data.totalHits / 12),
           }));
         })
         .catch(error => {
