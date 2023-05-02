@@ -18,7 +18,6 @@ export class App extends Component {
     searchText: '',
     page: 1,
     totalPage: 1,
-    total: 0,
   };
 
   onCloseModal = () => {
